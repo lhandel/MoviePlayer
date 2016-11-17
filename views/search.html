@@ -1,0 +1,32 @@
+<div class="content has_header">
+  <div class="header" ng-controller="SearchBarController">
+    <input type="text" class="search" my-enter="search()" ng-model="query" placeholder="Sök på film, serie" name="name" value="">
+  </div>
+
+  <div class="container">
+
+    <div class="row" ng-repeat="item in list track by $index" ng-if="$index % 4 == 0">
+
+      <div class="col-sm-3 movie"
+           ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]"
+           ng-if="list[i] != null" >
+
+
+           <img ng-click="goDetail(i,list[i].title);" ng-src="{{filterImg(list[i].poster)}}" class="poster" alt="" />
+
+           <h4>{{list[i].title}}</h4>
+           <div class="row">
+               <div class="col-sm-12 type">
+                 Drama,Biography
+               </div>
+           </div>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+</div>

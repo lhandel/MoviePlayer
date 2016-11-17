@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Dreamfilm</title>
+    <!-- styling -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.css" media="screen">
+
+    <!-- angular -->
+    <script src="assets/libs/angular.min.js"></script>
+    <script src="assets/libs/angular-route.js"></script>
+
+    <script src="app/app.js"></script>
+    <!-- controllers -->
+    <script src="app/controllers/DashboardController.js"></script>
+    <script src="app/controllers/DetailController.js"></script>
+    <script src="app/controllers/SearchController.js"></script>
+    <script src="app/controllers/controllers.js"></script>
+
+
+    <script type="text/javascript">
+    var can_send_request = true;
+    function new_request(){
+      var count_down = setTimeout(function(){
+        can_send_request = true;
+      }, 2900);
+    }
+    function send_request(callback,show_loader){
+        if(show_loader==true){
+          document.getElementById('gLoader').className = "loader visible";
+        }
+        var checker = setInterval(function(){
+          if(can_send_request==true){
+            document.getElementById('gLoader').className = "loader";
+            new_request();
+            callback();
+            can_send_request=false;
+            clearInterval(checker);
+          }
+        },100)
+    }
+    </script>
+  </head>
+  <body   ng-app="app">
+    <div class="loader" id="gLoader">
+        <img src="assets/img/loading.gif" alt="" />
+    </div>
+
+    <div class="container-fluid">
+      <div class="sidebar" style="-webkit-app-region: drag" ng-controller="MenuController">
+        <img src="assets/img/dreamfilm.png" class="logo" alt="" />
+        <ul>
+          <li><a href="#/dashboard/latest/all" ng-click="pindex=0" class="{{pindex==0? 'active' : ''}}"><i class="fa fa-play-circle" aria-hidden="true"></i>Start</a></li>
+          <!--<li><a href="#/favorites/" ng-click="pindex=5" class="{{pindex==5? 'active' : ''}}"><i class="fa fa-star" aria-hidden="true"></i>Favoriter</a></li>-->
+        </ul>
+
+        <h4><i class="fa fa-film" aria-hidden="true"></i> Serier</h4>
+        <ul>
+          <li><a href="#/dashboard/latest/serie" ng-click="pindex=1" class="{{pindex==1? 'active' : ''}}"> <i class="fa fa-clock-o" aria-hidden="true"></i>Senaste</a></li>
+          <li><a href="#/dashboard/toplist/serie" ng-click="pindex=2" class="{{pindex==2? 'active' : ''}}"><i class="fa fa-trophy" aria-hidden="true"></i>Topplistan</a></li>
+        </ul>
+
+        <h4><i class="fa fa-ticket" aria-hidden="true"></i> Filmer</h4>
+        <ul>
+          <li><a href="#/dashboard/latest/movie" ng-click="pindex=3" class="{{pindex==3? 'active' : ''}}"><i class="fa fa-clock-o" aria-hidden="true"></i>Senaste</a></li>
+          <li><a href="#/dashboard/toplist/movie" ng-click="pindex=4" class="{{pindex==4? 'active' : ''}}"><i class="fa fa-trophy" aria-hidden="true"></i>Topplistan</a></li>
+        </ul>
+
+      </div>
+      <!-- NG VIEW START -->
+        <div ng-view></div>
+      <!---.NG VIEW END -->
+
+    </div>
+
+  </body>
+</html>

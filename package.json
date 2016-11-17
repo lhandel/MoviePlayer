@@ -1,0 +1,21 @@
+{
+  "name": "MoviePlayer",
+  "version": "1.0.0",
+  "description": "A movie player for viewing movies from the web",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "build:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=darwin --arch=x64 --icon=icon.icns",
+    "build:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^media$' --prune --platform=win32 --arch=ia32 --icon=icon.ico --version-string.ProductName=$npm_package_productName --app-version=$npm_package_version"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron-packager": "^8.2.0",
+    "electron-prebuilt": "^1.4.6"
+  },
+  "dependencies": {
+    "imdb-api": "^2.2.0",
+    "sqlite3": "3.1.8"
+  }
+}

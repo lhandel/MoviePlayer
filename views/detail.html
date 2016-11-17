@@ -1,0 +1,59 @@
+<div class="content has_header">
+  <div class="header" ng-controller="SearchBarController">
+    {{test}}
+    <input type="text" class="search" my-enter="search()" ng-model="query" placeholder="Sök på film, serie" name="name" value="">
+  </div>
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-4 poster">
+        <img ng-src="{{filterImg(dreamfilm.poster)}}" alt="" />
+      </div>
+
+      <div class="col-sm-8">
+        <h1>
+            {{dreamfilm.title}}
+        </h1>
+        <div class="row">
+          <div class="short_info">
+            <div class="col-sm-12">
+              <span ng-if="imdb!=-1 && imdb!=0">{{imdb.year}}, {{imdb.runtime}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="plot_loading" ng-if="imdb!=-1 || imdb!=0">
+          <img src="assets/img/loading.gif" ng-if="imdb==0" class="loading" alt="" />
+          <p ng-if="imdb==-1">
+              Kunde inte hitta filmbeskrivning
+          </p>
+        </div>
+
+        <p ng-if="imdb!=-1">
+          {{imdb.plot}}
+        </p>
+
+        <div class="tabs-container" ng-if="dreamfilm.type=='serie'">
+          <ul class="nav-tabs">
+            <li ng-repeat="($key, season) in episodes track by $index" ng-click="selectThis($key)" class="{{$key==cseason? 'active':''}}">Säsong {{$key}}</li>
+          </ul>
+          <div class="tab-content">
+            <ul ng-repeat="(key, season) in episodes" ng-if="key==cseason">
+              <li ng-repeat="episode in season" ng-click="play(episode.url)">Avsnitt {{episode.episode}}</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <input type="button" value="Play movie" ng-click="play(dreamfilm.player[0].url)" ng-if="dreamfilm.type=='movie'">
+        <input type="button" name="name" value="Lägg till som favorit" ng-click="addFav();" ng-if="is_favorit==false">
+        <input type="button" name="name" value="Ta bort som favorit" ng-click="removeFav();" ng-if="is_favorit==true">
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+</div>
