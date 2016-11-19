@@ -17,10 +17,20 @@
     <script src="app/controllers/DashboardController.js"></script>
     <script src="app/controllers/DetailController.js"></script>
     <script src="app/controllers/SearchController.js"></script>
+    <script src="app/controllers/FavoritesController.js"></script>
     <script src="app/controllers/controllers.js"></script>
+
+    <script src="app/factory/datastorage.js"></script>
 
 
     <script type="text/javascript">
+
+    // setup node_modules
+    const remote = require('electron').remote;
+    const application = remote.app;
+    const path = require('path')
+    const Datastore = require('nedb');
+
     var can_send_request = true;
     function new_request(){
       var count_down = setTimeout(function(){
@@ -53,7 +63,7 @@
         <img src="assets/img/dreamfilm.png" class="logo" alt="" />
         <ul>
           <li><a href="#/dashboard/latest/all" ng-click="pindex=0" class="{{pindex==0? 'active' : ''}}"><i class="fa fa-play-circle" aria-hidden="true"></i>Start</a></li>
-          <!--<li><a href="#/favorites/" ng-click="pindex=5" class="{{pindex==5? 'active' : ''}}"><i class="fa fa-star" aria-hidden="true"></i>Favoriter</a></li>-->
+          <li><a href="#/favorites/" ng-click="pindex=5" class="{{pindex==5? 'active' : ''}}"><i class="fa fa-star" aria-hidden="true"></i>Favoriter</a></li>
         </ul>
 
         <h4><i class="fa fa-film" aria-hidden="true"></i> Serier</h4>

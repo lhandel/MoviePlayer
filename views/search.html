@@ -1,5 +1,9 @@
 <div class="content has_header">
   <div class="header" ng-controller="SearchBarController">
+    <ul class="navigate">
+      <li ng-click="back();" class="{{canGoBack?'': 'disable'}}">&lsaquo;</li>
+      <li ng-click="forward();" class="{{canGoForward?'': 'disable'}}">&rsaquo;</li>
+    </ul>
     <input type="text" class="search" my-enter="search()" ng-model="query" placeholder="Sök på film, serie" name="name" value="">
   </div>
 

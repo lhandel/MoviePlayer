@@ -9,6 +9,11 @@
 
   <div class="container">
 
+
+    <h2 ng-if="isEmpty" style="text-align:center;">Här var det tomt!</h2>
+    <p ng-if="isEmpty" style="text-align:center;">
+      Du har inte lagt till några filmer eller serier som favorit än
+    </p>
     <div class="row" ng-repeat="item in list track by $index" ng-if="$index % 4 == 0">
       <!-- moviebox-->
       <div class="col-sm-3 movie"

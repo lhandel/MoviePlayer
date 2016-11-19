@@ -231,10 +231,13 @@ visibility: hidden;
    border-right: 1px solid rgb(228, 228, 228);
    font-size: 13px;
    list-style-type: none;
+   cursor: default;
+   background-color: rgba(242,242,242,0.5);
  }
  .tabs-container .nav-tabs li.active{
    font-weight: bold;
    border-right: 1px solid #fff;
+   background-color: #fff;
  }
  .tab-content{
    margin: 0;
@@ -258,3 +261,58 @@ visibility: hidden;
    font-size: 13px;
    border-bottom: 1px solid rgb(228, 228, 228);
  }
+  .tab-content ul li .fa{
+    display: none;
+  }
+.tab-content ul li.viewed .fa{
+  display: block;
+  float: right;
+  margin-top: 2px;
+  margin-right: 5px;
+}
+  .tab-content ul li.viewed{
+    color: rgba(0,0,0,0.4);
+  }
+
+ul.navigate{
+  margin: 0;
+  padding: 0;
+  float: right;
+  margin-right: 10px;
+  margin-top: 13px;
+}
+ul.navigate li{
+  list-style-type: none;
+  list-style-type: none;
+  display: inline;
+  text-align: center;
+  background-color: #f6f6f6;
+  display: block;
+  float: left;
+  font-size: 24px;
+  line-height: 22px;
+  color: #333;
+  width: 30px;
+  height: 30px;
+  border-bottom: 1px solid #ecedf2;
+  border-top: 1px solid #ecedf2;
+}
+ul.navigate li:active{
+  background-color: #eeeeee;
+}
+ul.navigate li.disable{
+  background-color: rgba(246, 246, 246, 0.5);
+  color: rgb(194, 194, 194);
+}
+ul.navigate li.disable:active{
+  background-color: rgba(246, 246, 246, 0.5);
+}
+ul.navigate li:first-child{
+  border-left: 1px solid #ecedf2;
+  border-radius: 3px 0px 0 3px;
+  border-right:1px solid #ecedf2;
+}
+ul.navigate li:last-child{
+  border-right: 1px solid #ecedf2;
+  border-radius: 0px 3px 3px 0px;
+}

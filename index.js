@@ -6,6 +6,7 @@ const {Menu} = require('electron')
 
 app.on('ready', () => {
 
+
   var menu = Menu.buildFromTemplate([
   {
     label: 'Dreamfilm',
@@ -23,6 +24,16 @@ app.on('ready', () => {
     titleBarStyle:'hidden',
     title: "Dreamfilm"
   })
+  const {session} = require('electron');
+
+
+  mainWindow.on('app-command', (e, cmd) => {
+    // Navigate the window back when the user hits their mouse back button
+    if (cmd === 'browser-backward' && mainWindow.webContents.canGoBack()) {
+      mainWindow.webContents.goBack()
+    }
+  });
+
   // On mainwindow close, quit the app
   mainWindow.on('closed', () => {
     mainWindow = null
@@ -45,5 +56,11 @@ app.on('ready', () => {
       show: true,
     })
     playerWindow.loadURL(arg);
+    playerWindow.on('new-window', (e) => {
+      console.log("popup blockeed");
+      alert("popup blockeed");
+      e.preventDefault;
+    });
+
   });
 })

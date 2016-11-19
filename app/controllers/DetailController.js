@@ -1,11 +1,30 @@
-angular.module('app.controllers').controller('DetailController', ['$scope','$http','$routeParams',
-  function ($scope,$http,$routeParams) {
+angular.module('app.controllers').controller('DetailController', ['$scope','$http','$routeParams','$datastorage',
+  function ($scope,$http,$routeParams,$datastorage) {
 
     $scope.dreamfilm = movie;
     $scope.episodes = [];
     $scope.dreamfilm.type ='movie';
     $scope.imdb = 0;
 
+
+    // is fav
+    $datastorage.isFavorite(movie).then(function(value){
+        $scope.is_favorit = value;
+        console.log($scope.is_favorit);
+    });
+
+    // Add favorites
+    $scope.addFav = function(){
+      $datastorage.saveFavorite(movie).then(function() {
+        $scope.is_favorit = true;
+      });
+    }
+    // Remove favorites
+    $scope.removeFav = function(){
+      $datastorage.removeFavorite(movie).then(function() {
+        $scope.is_favorit = false;
+      });
+    }
 
     // Get movie-info from IMDB
     var imdb = require('imdb-api');
@@ -25,11 +44,17 @@ angular.module('app.controllers').controller('DetailController', ['$scope','$htt
     });
     //.end get info from imdb
 
+
     // check if serie
     if (typeof(movie.player) == 'undefined') {
       $scope.dreamfilm.type ='serie';
 
-      // get episodes
+      $scope.viewedEpisodes;
+      $datastorage.getShowedEpisodes(movie).then(function(value){
+        $scope.viewedEpisodes = value;
+        console.log($scope.viewedEpisodes);
+      });
+      // get episodes from api
       send_request(function(){
         $http({
           method: 'GET',
@@ -48,6 +73,7 @@ angular.module('app.controllers').controller('DetailController', ['$scope','$htt
         });
       },true);
     } //.end get seriers
+
 
     // Select a season
     $scope.selectThis = function(key){
@@ -78,7 +104,18 @@ angular.module('app.controllers').controller('DetailController', ['$scope','$htt
     };
 
     // plays a movie in a new window
-    $scope.play = function(url){
+    $scope.play = function(url,ep_id){
+
+      $datastorage.markAsViewed({
+          id: movie.id,
+          episode_id: (typeof(ep_id) == 'undefined')? '' : ep_id,
+      }).then(function() {
+        console.log("Added!");
+        if(typeof(ep_id) !== 'undefined'){
+          $scope.viewedEpisodes.push(ep_id);
+        }
+      });
+      // Send IPC to main proccess
       const {ipcRenderer} = require('electron')
       try {
           if (typeof(url) !== 'undefined') {

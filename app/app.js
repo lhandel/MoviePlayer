@@ -3,6 +3,7 @@ var movie;
 var app = angular.module('app', [
   'ngRoute',
   'app.controllers',
+  'app.datastorage'
 ]);
 angular.module('app.controllers', []);
 app.config(['$routeProvider',
@@ -16,6 +17,10 @@ app.config(['$routeProvider',
       when('/detail', {
         templateUrl: 'views/detail.html',
         controller: 'DetailController'
+      }).
+      when('/favorites', {
+        templateUrl: 'views/favorites.html',
+        controller: 'FavoritesController'
       }).
       when('/search/:query', {
         templateUrl: 'views/search.html',
@@ -36,4 +41,8 @@ app.config(['$routeProvider',
             }
         });
     };
-})
+}).filter('contains', function() {
+  return function (array, needle) {
+    return array.indexOf(needle) >= 0;
+  };
+});
