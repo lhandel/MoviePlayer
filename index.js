@@ -2,11 +2,43 @@ const {app, globalShortcut} = require('electron')
 const {BrowserWindow} = require('electron')
 const {ipcMain} = require('electron')
 const {Menu} = require('electron')
+let mainWindow;
 
+app.on('activate', () => {
+  if(mainWindow==null){
+    mainWindow = createMainWindow();
+    mainWindow.show();
+  }
+  console.log("activate");
+});
 
+function createMainWindow(){
+  const win = new BrowserWindow({
+    width: 900,
+    height: 650,
+    titleBarStyle:'hidden',
+    title: "Dreamfilm",
+    show: false
+  });
+  // Load a remote URL
+  win.loadURL('file://'+__dirname+'/index.html');
+
+  win.once('ready-to-show', () => {
+    win.show();
+  });
+  // On mainwindow close, quit the app
+  win.on('closed', () => {
+    console.log('closed');
+    mainwindow = null;
+  });
+
+  return win;
+}
 app.on('ready', () => {
 
-
+  globalShortcut.register('CommandOrControl+H', () => {
+    app.hide();
+  });
   var menu = Menu.buildFromTemplate([
   {
     label: 'Dreamfilm',
@@ -18,13 +50,8 @@ app.on('ready', () => {
   Menu.setApplicationMenu(menu);
 
   // Create the main window
-  let mainWindow = new BrowserWindow({
-    width: 900,
-    height: 650,
-    titleBarStyle:'hidden',
-    title: "Dreamfilm"
-  })
-  const {session} = require('electron');
+  mainWindow = createMainWindow();
+
 
 
   mainWindow.on('app-command', (e, cmd) => {
@@ -34,32 +61,29 @@ app.on('ready', () => {
     }
   });
 
-  // On mainwindow close, quit the app
-  mainWindow.on('closed', () => {
-    mainWindow = null
-    app.quit();
-  });
+
   mainWindow.setMenu(menu);
 
-  // Load a remote URL
-  mainWindow.loadURL('file://'+__dirname+'/index.html');
+
   //mainWindow.webContents.openDevTools()
 
   // Open new window and play movie
   ipcMain.on('play', (event, arg) => {
     console.log("Laddar "+arg)
     var playerWindow = new BrowserWindow({
-      width: 800,
+      width: 710,
       height: 400,
       titleBarStyle:'hidden',
       title: "Spelar film",
       show: true,
     })
-    playerWindow.loadURL(arg);
+    playerWindow.loadURL(arg,{
+      httpReferrer: 'http://dreamfilmhd.bz/'
+    });
     playerWindow.on('new-window', (e) => {
       console.log("popup blockeed");
       alert("popup blockeed");
-      e.preventDefault;
+      e.preventDefault();
     });
 
   });
