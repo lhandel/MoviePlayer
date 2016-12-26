@@ -35,7 +35,8 @@ img,a{
 .sidebar{
   height: 100%;
   width: 200px;
-  background-color: #395a80;
+  //background-color: rgba(57,90,128,0.95);/*#395a80*/
+  backdrop-filter: blur(10px);
   padding-top: 20px;
   position: fixed;
   left: 0;
@@ -74,12 +75,25 @@ img,a{
 .sidebar ul li a.active{
   background-color: #204673;
 }
+/*
 .content{
   position: absolute;
   left: 240px;
   top:0px;
   bottom: 0;
   right: 20px;
+}
+*/
+.content{
+  background-color: #fff;
+  position: fixed;
+  overflow-y: scroll;
+  left: 200px;
+  top:0px;
+  bottom: 0;
+  right: 0;
+  padding-left: 40px;
+  padding-right: 20px;
 }
 .content.has_header{
   padding-top: 85px;

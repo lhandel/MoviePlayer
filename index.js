@@ -18,12 +18,25 @@ function createMainWindow(){
     height: 650,
     titleBarStyle:'hidden',
     title: "Dreamfilm",
-    show: false
+    transparent: true,
+    frame: false,
+    toolbar: false,
+    show: false,
+    "web-preferences":{
+      experimentalFeatures:true
+    }
   });
+  app.commandLine.appendSwitch('--enable-experimental-web-platform-features');
   // Load a remote URL
   win.loadURL('file://'+__dirname+'/index.html');
 
   win.once('ready-to-show', () => {
+    var electronVibrancy = require('electron-vibrancy');
+
+    // Whole window vibrancy with Material 0 and auto resize
+    electronVibrancy.SetVibrancy(win, 9);
+
+
     win.show();
   });
   // On mainwindow close, quit the app
@@ -80,6 +93,9 @@ app.on('ready', () => {
     playerWindow.loadURL(arg,{
       httpReferrer: 'http://dreamfilmhd.bz/'
     });
+    let contents = playerWindow.webContents;
+    console.log(contents);
+
     playerWindow.on('new-window', (e) => {
       console.log("popup blockeed");
       alert("popup blockeed");
