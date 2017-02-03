@@ -106,10 +106,11 @@ angular.module('app.controllers').controller('DetailController', ['$scope','$htt
     // plays a movie in a new window
     $scope.play = function(url,ep_id){
 
-      $datastorage.markAsViewed({
+      var viewInfo = {
           id: movie.id,
           episode_id: (typeof(ep_id) == 'undefined')? '' : ep_id,
-      }).then(function() {
+      };
+      $datastorage.markAsViewed(viewInfo).then(function() {
         console.log("Added!");
         if(typeof(ep_id) !== 'undefined'){
           $scope.viewedEpisodes.push(ep_id);
@@ -119,7 +120,10 @@ angular.module('app.controllers').controller('DetailController', ['$scope','$htt
       const {ipcRenderer} = require('electron')
       try {
           if (typeof(url) !== 'undefined') {
-            ipcRenderer.send('play', url)
+            ipcRenderer.send('play', {
+              url: url,
+              viewInfo: viewInfo
+            })
           }else{
             alert('Kunde inte ladda filmen :(');
           }

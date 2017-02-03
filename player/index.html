@@ -5,22 +5,35 @@
     <title></title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="slider.css">
-    <style media="screen">
-      /*
-       * TODO:
-       * volyme-slider
-       * loader
-       * hide controls after x sec
-       * space to pause/play
-       * continue or start from begining
-       */
-    </style>
+    <link rel="stylesheet" href="../assets/css/font-awesome.css">
+  
   </head>
   <body>
+  <script src="jquery.js" charset="utf-8"></script>
   <script src="script.js" charset="utf-8"></script>
+  <script>
 
+
+  </script>
+  <div class="continue hide">
+    <div class="continer">
+      <h1>Vill du fortsätta titta?</h1>
+      <input value="Ja" type="button" class="btn" id="continue">
+      <input value="Nej" class="btn" type="button" id="restart">
+    </div>
+  </div>
   <div class="controls block">
-    <div class="play" id="pp">-</div>
+    <div class="volyme-slider">
+      <div class="volList">
+      <div class="volyme-icon">
+        <i class="fa fa-volume-up" aria-hidden="true"></i>
+      </div>
+      <div class="volyme-container">
+        <input type="range" id="volyme-slider" name="" value="">
+      </div>
+    </div>
+    </div>
+    <div class="play" id="pp"><img src="giphy.gif" style="height:18px; width:auto;"></div>
     <div class="slide">
       <input id="seek-bar" type="range" value="0" />
     </div>
@@ -29,6 +42,5 @@
   </div>
   <div id="div_video"> </div>
 
-</video>
   </body>
 </html>

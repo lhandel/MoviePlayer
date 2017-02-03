@@ -1,6 +1,6 @@
 {
   "name": "MoviePlayer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A movie player for viewing movies from the web",
   "main": "index.js",
   "scripts": {

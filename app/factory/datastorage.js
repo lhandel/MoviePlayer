@@ -51,18 +51,32 @@ angular.module('app.datastorage', [])
     },
     markAsViewed: function(data){
       var defer = $q.defer();
-      var object = {
-          id: data.id,
-          episode_id: (typeof(data.episode_id) == 'undefined')? '' : data.episode_id,
-          date: Date.now()
-      };
-      db.activity.insert(object,function(err,newDocs){
-        if(err==null){
-          defer.resolve(true);
+
+      var serach = {
+        id: data.id,
+        episode_id: (typeof(data.episode_id) == 'undefined')? '' : data.episode_id,
+      }
+      db.activity.findOne(serach,function (err, doc) {
+        if(doc!=null){
+      
         }else{
-          defer.reject(err)
+          var object = {
+              id: data.id,
+              episode_id: (typeof(data.episode_id) == 'undefined')? '' : data.episode_id,
+              date: Date.now(),
+              currentTime:0,
+              completed:0
+          };
+          db.activity.insert(object,function(err,newDocs){
+            if(err==null){
+              defer.resolve(true);
+            }else{
+              defer.reject(err)
+            }
+          });
         }
-      });
+      })
+
 
       return defer.promise;
     },

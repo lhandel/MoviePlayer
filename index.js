@@ -66,8 +66,8 @@ app.on('ready', () => {
     }
   });
 
-
   mainWindow.setMenu(menu);
+
 
   // Open new window and play movie
   ipcMain.on('play', (event, arg) => {
@@ -93,12 +93,11 @@ app.on('ready', () => {
       httpReferrer: 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
       userAgent: 'http://www.dreamfilmhd.org/API/api.php',
     });
-    loaderWindow.loadURL(arg,{
+    loaderWindow.loadURL(arg.url,{
       httpReferrer: 'http://dreamfilmhd.bz/'
     });
 
     var movie_url='';
-
     loaderWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
       var url = details.url;
 
@@ -110,13 +109,16 @@ app.on('ready', () => {
         console.log("Boom");
 
         if(first){
-          playerWindow.webContents.send('url', movie_url);
+          playerWindow.webContents.send('url', {
+            url: movie_url,
+            viewInfo: arg.viewInfo
+          });
+          loaderWindow.close();
         }
       }
       callback({});
     })
 
-    playerWindow.webContents.openDevTools()
 
   });
 })
